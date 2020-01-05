@@ -6,6 +6,16 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="AdventureGameDB.db" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="AdventureGameDB.db">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="sqlite" Version="3.13.0" />
   </ItemGroup>
 
