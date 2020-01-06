@@ -4,17 +4,16 @@ using System.Text;
 
 namespace AdventureGame.Player
 {
-    class Adventurer
+    public class Adventurer
     {
         public string Name { get; set; }
         public int HP { get; set; }
         public string CurrentQuest { get; set; }
 
 
-        public Adventurer(string _name)
+        public Adventurer()
         {
-            Name = _name;
-            set_hp(100);
+            
         }
 
         public void set_hp(int hp)

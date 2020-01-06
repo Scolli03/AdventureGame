@@ -6,7 +6,17 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="sqlite" Version="3.13.0" />
+    <None Remove="AdventureGameDB.db" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="AdventureGameDB.db">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="System.Data.SQLite.Core" Version="1.0.112" />
   </ItemGroup>
 
 </Project>

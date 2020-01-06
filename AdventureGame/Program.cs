@@ -1,26 +1,27 @@
-﻿using AdventureGame.Player;
-using System;
+﻿using System;
+using System.Threading;
 
 namespace AdventureGame
 {
-    class Program
+    internal class Program
     {
-        static void Main(string[] args)
+        private static void Main(string[] args)
         {
+            
+
             Console.WriteLine("Hello Adventurer!\nWhat is your name?");
 
             var name = Console.ReadLine();
 
-            Adventurer adv = new Adventurer(name.ToLower());
+            var adv = SqliteStuff.SqliteHelper.GetPlayerByName(name);
 
-            Console.WriteLine($"Welcome {adv.Name}!");
-
-            if (adv.CurrentQuest == null)
+            if (adv.CurrentQuest == "Start")
             {
-
-                Console.WriteLine("Current quest: The Beginning");
+                Console.WriteLine($"Welcome {adv.Name}!");
+                Thread.Sleep(2000);
+                Console.WriteLine("And so our journey begins...");
+                Thread.Sleep(2000);
             }
-
         }
     }
 }
