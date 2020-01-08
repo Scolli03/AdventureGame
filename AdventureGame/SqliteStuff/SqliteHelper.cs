@@ -48,6 +48,45 @@ namespace AdventureGame.SqliteStuff
             }
         }
 
+        public static void Set_Class(string playerclass, Adventurer adv)
+        {
+            
+            switch (playerclass)
+            {
+                case "Archer":
+                    adv.HP = 100;
+                    adv.Class = playerclass;
+                    break;
+                case "Sorcerer":
+                    adv.HP = 150;
+                    adv.Class = playerclass;
+                    break;
+                case "Knight":
+                    adv.HP = 250;
+                    adv.Class = playerclass;
+                    break;
+                default:
+                    Console.WriteLine("Try Again...");
+                    break;
+            }
+        }
+
+        public static void Update_Player(Adventurer adv)
+        {
+            using (con)
+            {
+                string query = "UPDATE Player SET Class = @class,HP = @hp, Quest = @quest  WHERE Name = @name";
+
+                using(SQLiteCommand cmd = new SQLiteCommand(query, con))
+                {
+                    cmd.Parameters.AddWithValue("@Class", adv.Class);
+                    cmd.Parameters.AddWithValue("@HP", adv.HP);              
+
+                    cmd.ExecuteNonQuery();
+                }
+            }
+        }
+
         private static void Add_New_Player(Adventurer adv)
         {
             using (con)
@@ -62,6 +101,25 @@ namespace AdventureGame.SqliteStuff
                     cmd.Parameters.AddWithValue("@quest", adv.CurrentQuest);
 
                     cmd.ExecuteNonQuery();
+                }
+            }
+        }
+
+
+
+        public static void Count_Players()
+        {
+            using (con)
+            {
+                con.Open();
+                string query = "Select * FROM Player";
+                using(var cmd = new SQLiteCommand(query, con))
+                {
+                    SQLiteDataReader reader = cmd.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        Console.WriteLine(reader["Name"]);
+                    }
                 }
             }
         }

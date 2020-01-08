@@ -6,8 +6,7 @@ namespace AdventureGame
     internal class Program
     {
         private static void Main(string[] args)
-        {
-            
+        {            
 
             Console.WriteLine("Hello Adventurer!\nWhat is your name?");
 
@@ -19,8 +18,17 @@ namespace AdventureGame
             {
                 Console.WriteLine($"Welcome {adv.Name}!");
                 Thread.Sleep(2000);
-                Console.WriteLine("And so our journey begins...");
+                Console.WriteLine("What class are you?\nKnight\nArcher\nSorcerer");
+                string playerclass = Console.ReadLine();
+                SqliteStuff.SqliteHelper.Set_Class(playerclass,adv);
+                adv.CurrentQuest = "SoItBegins";
+                SqliteStuff.SqliteHelper.Update_Player(adv);
+                Console.WriteLine($"And so our journey begins...{adv.Class}");
                 Thread.Sleep(2000);
+            }
+            else
+            {
+                Console.WriteLine($"Welcome Back {adv.Name}"); 
             }
         }
     }
