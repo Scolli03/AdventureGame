@@ -10,6 +10,8 @@ namespace AdventureGame.Player
         public int HP { get; set; }
         public string CurrentQuest { get; set; }
 
+        public string Weapon { get; set; }
+
         public string Class { get; set; }
 
 

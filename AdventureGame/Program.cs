@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AdventureGame.Quests;
+using System;
 using System.Threading;
 
 namespace AdventureGame
@@ -28,7 +29,7 @@ namespace AdventureGame
             }
             else
             {
-                Console.WriteLine($"Welcome Back {adv.Name}"); 
+                QuestManager manager = new QuestManager(adv);
             }
         }
     }

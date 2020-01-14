@@ -1,17 +1,19 @@
 ﻿using AdventureGame.Player;
 using System;
 using System.Data.SQLite;
+using System.IO;
 
 namespace AdventureGame.SqliteStuff
 {
     public static class SqliteHelper
     {
-        private static string cs = @"URI=file:C:\Users\Shain\Source\Repos\AdventureGame\AdventureGame\AdventureGameDB.db";
-        private static SQLiteConnection con = new SQLiteConnection(cs);
+        private static string cs = $@"URI=file:C:\Users\Shain\source\repos\AdventureGame\AdventureGame\AdventureGameDB.db";
+        private static SQLiteConnection con;
 
         public static Adventurer GetPlayerByName(string name)
         {
-            using (con)
+            Adventurer player;
+            using (con = new SQLiteConnection(cs))
             {
                 con.Open();
                 string stm = "SELECT * FROM Player WHERE Name = @name";
@@ -23,26 +25,30 @@ namespace AdventureGame.SqliteStuff
                     {
                         if (rdr.Read())
                         {
-                            Adventurer player = new Adventurer()
+                            player = new Adventurer()
                             {
                                 Name = rdr["Name"].ToString(),
                                 HP = Convert.ToInt32(rdr["HP"]),
-                                CurrentQuest = rdr["Quest"].ToString()
+                                CurrentQuest = rdr["Quest"].ToString(),
+                                Weapon = rdr["Weapon"].ToString()
+                                
                             };
-
-                            return player;
+                            
                         }
                         else
                         {
-                            Adventurer player = new Adventurer()
+                            player = new Adventurer()
                             {
                                 Name = name,
                                 HP = 100,
                                 CurrentQuest = "Start"
                             };
                             Add_New_Player(player);
-                            return player;
+                            
                         }
+
+                        con.Close();
+                        return player;
                     }
                 }
             }
@@ -73,25 +79,30 @@ namespace AdventureGame.SqliteStuff
 
         public static void Update_Player(Adventurer adv)
         {
-            using (con)
+            using (con = new SQLiteConnection(cs))
             {
+                con.Open();
                 string query = "UPDATE Player SET Class = @class,HP = @hp, Quest = @quest  WHERE Name = @name";
 
                 using(SQLiteCommand cmd = new SQLiteCommand(query, con))
                 {
-                    cmd.Parameters.AddWithValue("@Class", adv.Class);
-                    cmd.Parameters.AddWithValue("@HP", adv.HP);              
+                    cmd.Parameters.AddWithValue("@class", adv.Class);
+                    cmd.Parameters.AddWithValue("@hp", adv.HP);
+                    cmd.Parameters.AddWithValue("@quest", adv.CurrentQuest);
+                    cmd.Parameters.AddWithValue("@name", adv.Name);
 
                     cmd.ExecuteNonQuery();
                 }
+
+                con.Close();
             }
         }
 
         private static void Add_New_Player(Adventurer adv)
         {
-            using (con)
+            using (con = new SQLiteConnection(cs))
             {
-                //con.Open();
+                con.Open();
                 string query = "INSERT INTO Player (Name,HP,Quest) VALUES (@name,@hp,@quest)";
                 using(var cmd = new SQLiteCommand(query, con))
                 {
@@ -102,6 +113,7 @@ namespace AdventureGame.SqliteStuff
 
                     cmd.ExecuteNonQuery();
                 }
+                con.Close();
             }
         }
 
