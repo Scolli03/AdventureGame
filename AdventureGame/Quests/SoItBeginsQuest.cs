@@ -25,6 +25,8 @@ namespace AdventureGame.Quests
             
             Console.WriteLine(dialog);
 
+            Console.WriteLine(_player.Class);
+
             if(_player.Class == "Sorcerer")
             {
                 Console.WriteLine("A: Point your staff into the air and shout an encantation.\nB: Jump and tackle the woman out of the way.\nC: Run back into your house.");

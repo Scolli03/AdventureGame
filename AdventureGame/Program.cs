@@ -26,11 +26,11 @@ namespace AdventureGame
                 SqliteStuff.SqliteHelper.Update_Player(adv);
                 Console.WriteLine($"And so our journey begins...{adv.Class}");
                 Thread.Sleep(2000);
+
             }
-            else
-            {
-                QuestManager manager = new QuestManager(adv);
-            }
+            
+            QuestManager manager = new QuestManager(adv);
+            
         }
     }
 }

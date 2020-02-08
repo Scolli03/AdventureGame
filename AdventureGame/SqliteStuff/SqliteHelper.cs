@@ -30,7 +30,8 @@ namespace AdventureGame.SqliteStuff
                                 Name = rdr["Name"].ToString(),
                                 HP = Convert.ToInt32(rdr["HP"]),
                                 CurrentQuest = rdr["Quest"].ToString(),
-                                Weapon = rdr["Weapon"].ToString()
+                                Weapon = rdr["Weapon"].ToString(),
+                                Class = rdr["Class"].ToString()
                                 
                             };
                             
@@ -47,7 +48,7 @@ namespace AdventureGame.SqliteStuff
                             
                         }
 
-                        con.Close();
+                        
                         return player;
                     }
                 }
@@ -94,7 +95,7 @@ namespace AdventureGame.SqliteStuff
                     cmd.ExecuteNonQuery();
                 }
 
-                con.Close();
+                
             }
         }
 
@@ -113,7 +114,7 @@ namespace AdventureGame.SqliteStuff
 
                     cmd.ExecuteNonQuery();
                 }
-                con.Close();
+                
             }
         }
 
